@@ -4,15 +4,16 @@ async function loadArchivedMovies() {
   const user = await requireAuth();
   if (!user) return;
 
-  // Get archived movies
+  // 1️⃣ Fetch archived movies
   const { data: archivedMovies, error: moviesError } = await supabase
     .from('movies')
     .select('*')
-    .eq('in_theatres', false);
+    .eq('in_theatres', false)
+    .order('tmdb_id', { ascending: false });
 
-  if (moviesError) return console.error(moviesError);
+  if (moviesError) return console.error('Error fetching movies:', moviesError);
 
-  // Get user's collected movie IDs
+  // 2️⃣ Fetch user's collection
   const { data: userCollection } = await supabase
     .from('collections')
     .select('movie_id')
@@ -20,7 +21,9 @@ async function loadArchivedMovies() {
 
   const collectedIds = userCollection.map(m => m.movie_id);
 
+  // 3️⃣ Render movies
   const container = document.getElementById('archived-movies');
+  container.innerHTML = ''; // clear old content
 
   archivedMovies.forEach(movie => {
     const div = document.createElement('div');
@@ -37,4 +40,5 @@ async function loadArchivedMovies() {
   });
 }
 
+// Load archived movies on page load
 loadArchivedMovies();
