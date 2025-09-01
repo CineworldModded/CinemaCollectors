@@ -5,11 +5,14 @@ const IMG_URL = "https://image.tmdb.org/t/p/w500";
 // Fetch movies currently in theaters
 async function getMovies() {
   try {
-    const res = await fetch(`${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`);
-    const data = await res.json();
+    const url = `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Network response was not ok");
+    const data = await response.json();
     displayMovies(data.results);
-  } catch (err) {
-    console.error("Error fetching movies:", err);
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+    document.getElementById("movies").innerHTML = "<p>Failed to load movies. Check API key or CORS.</p>";
   }
 }
 
@@ -29,4 +32,3 @@ function displayMovies(movies) {
 
 // Run on page load
 getMovies();
-
