@@ -1,43 +1,74 @@
-import { supabase } from './supabaseClient.js'; // your Supabase client
-const TMDB_API_KEY = '7903604122024e0b7efb57b94fa08ea7';
-const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+import { supabase, requireAuth, goToCollection, goToHome, logout } from './auth.js';
 
-async function fetchMovies(page = 1, type = 'now_playing') {
-  const res = await fetch(`https://api.themoviedb.org/3/movie/${type}?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`);
-  const data = await res.json();
-  return data.results;
+const IMG_URL = "https://image.tmdb.org/t/p/w500";
+const API_KEY = "7903604122024e0b7efb57b94fa08ea7"; // Replace with your TMDb key
+const BASE_URL = "https://api.themoviedb.org/3";
+
+const moviesContainer = document.getElementById("movies");
+const collectionBtn = document.getElementById("collectionBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const mainBtn = document.getElementById("mainBtn");
+
+// Attach navigation functions
+collectionBtn.onclick = goToCollection;
+mainBtn.onclick = goToHome;
+logoutBtn.onclick = logout;
+
+// Ensure user is logged in
+async function init() {
+  await requireAuth();
+  loadMovies();
 }
 
-async function populateAllMovies() {
-  const today = new Date();
-
-  // You can loop through multiple pages if needed
-  let page = 1;
-  let movies;
-
-  do {
-    movies = await fetchMovies(page);
-
-    for (const movie of movies) {
-      const releaseDate = new Date(movie.release_date);
-      const inTheatres = releaseDate > today ? true : false; // mark archived or current
-
-      await supabase.from('movies').upsert({
-        tmdb_id: movie.id,
-        title: movie.title,
-        poster_path: `${IMG_BASE_URL}${movie.poster_path}`,
-        limit: 100,        // max collectors
-        collected: 0,
-        in_theatres: inTheatres
-      }, { onConflict: ['tmdb_id'] });
-    }
-
-    page++;
-  } while (movies && movies.length > 0);
-
-  console.log('Movies table repopulated!');
+// Fetch and display movies
+async function loadMovies() {
+  try {
+    const res = await fetch(`${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`);
+    const data = await res.json();
+    displayMovies(data.results);
+  } catch (err) {
+    console.error("Failed to load movies:", err);
+    moviesContainer.innerHTML = "<p>Failed to load movies. Check API key or internet connection.</p>";
+  }
 }
 
-populateAllMovies()
-  .then(() => console.log('Done!'))
-  .catch(err => console.error(err));
+// Render movie posters and Collect buttons
+function displayMovies(movies) {
+  moviesContainer.innerHTML = "";
+
+  movies.forEach(movie => {
+    const div = document.createElement("div");
+    div.classList.add("movie-card");
+
+    div.innerHTML = `
+      <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
+      <h3>${movie.title}</h3>
+      <button class="collectBtn">Collect</button>
+    `;
+
+    // Add click event for collecting
+    div.querySelector(".collectBtn").onclick = () => collectMovie(movie);
+
+    moviesContainer.appendChild(div);
+  });
+}
+
+// Add movie to user's collection
+async function collectMovie(movie) {
+  const session = await supabase.auth.getSession();
+  const user = session.data.session?.user;
+  if (!user) return alert("Please log in first!");
+
+  const { error } = await supabase.from('collections').insert([
+    { user_id: user.id, movie_id: movie.id.toString() } // Ensure movie_id is string
+  ]);
+
+  if (error) return alert("Error collecting movie: " + error.message);
+  alert(`🎉 You collected "${movie.title}"!`);
+}
+
+init();
+
+
+
+
