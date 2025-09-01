@@ -21,6 +21,8 @@ async function loadCollection() {
     const movie = await res.json();
 
     const div = document.createElement("div");
+    div.classList.add("movie-card");
+    
     div.innerHTML = `
       <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
       <h3>${movie.title}</h3>
