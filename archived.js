@@ -41,14 +41,17 @@ function displayMovies(movies) {
     div.classList.add("movie-card");
 
     div.innerHTML = `
-      <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
+      <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}" class="grayed">
       <h3>${movie.title}</h3>
     `;
 
-    // Add click event for collecting
+    // Optional: if you want to still make the div clickable to collect later
+    // div.onclick = () => collectMovie(movie);
+
     moviesContainer.appendChild(div);
   });
 }
+
 
 // Add movie to user's collection
 async function collectMovie(movie) {
