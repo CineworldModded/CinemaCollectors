@@ -7,9 +7,11 @@ const BASE_URL = "https://api.themoviedb.org/3";
 const moviesContainer = document.getElementById("movies");
 const collectionBtn = document.getElementById("collectionBtn");
 const logoutBtn = document.getElementById("logoutBtn");
+const archiveBtn = document.getElementById("logoutBtn");
 
 // Attach navigation functions
 collectionBtn.onclick = goToCollection;
+archiveBtn.onclick = goToArchive;
 logoutBtn.onclick = logout;
 
 // Ensure user is logged in
@@ -66,3 +68,4 @@ async function collectMovie(movie) {
 }
 
 init();
+
