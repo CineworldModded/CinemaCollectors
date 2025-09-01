@@ -27,7 +27,7 @@ header p {
 #collection {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 20px; /* Increased gap between grid items */
+  gap: 60px; /* Increased gap between grid items */
   padding: 40px; /* Increased padding around the grid */
 }
 
