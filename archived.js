@@ -43,12 +43,9 @@ function displayMovies(movies) {
     div.innerHTML = `
       <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
       <h3>${movie.title}</h3>
-      <button class="collectBtn">Collect</button>
     `;
 
     // Add click event for collecting
-    div.querySelector(".collectBtn").onclick = () => collectMovie(movie);
-
     moviesContainer.appendChild(div);
   });
 }
