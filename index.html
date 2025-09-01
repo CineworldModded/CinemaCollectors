@@ -7,23 +7,10 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>🎬 Cinema Collectors</h1>
+  <header>
+    <h1>🎬 Cinema Collectors</h1>
+    <p>Collect your favorite movies from theaters!</p>
+  </header>
 
-  <!-- 🔹 AUTH FORM -->
-  <div id="auth">
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="signUp()">Sign Up</button>
-    <button onclick="signIn()">Sign In</button>
-  </div>
-
-  <!-- 🔹 MOVIE LIST -->
-  <div id="movies"></div>
-
-  <!-- 🔹 COLLECTION BUTTON -->
-  <button onclick="loadCollection()">View My Collection</button>
-
-  <script type="module" src="script.js"></script>
-</body>
-</html>
-
+  <main>
+    <div id="movies"></div>
