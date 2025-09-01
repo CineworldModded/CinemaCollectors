@@ -3,13 +3,36 @@ body {
   text-align: center;
   background: #111;
   color: white;
+  margin: 0;
+  padding: 0;
 }
+
+#auth {
+  margin: 20px;
+}
+
+input {
+  padding: 8px;
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
+button {
+  padding: 8px 12px;
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
 #movies {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 20px;
   padding: 20px;
 }
+
 img {
   width: 100%;
   border-radius: 10px;
