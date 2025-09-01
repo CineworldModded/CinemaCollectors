@@ -29,3 +29,4 @@ function displayMovies(movies) {
 
 // Run on page load
 getMovies();
+
