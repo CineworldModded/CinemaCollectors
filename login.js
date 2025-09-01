@@ -6,4 +6,4 @@ const resetBtn = document.getElementById('resetBtn');
 
 window.signUp = () => signUp(emailInput.value, passwordInput.value);
 window.signIn = () => signIn(emailInput.value, passwordInput.value);
-window.resetPassword = () => signIn(emailInput.value);
+window.resetPassword = () => signIn();
