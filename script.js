@@ -1,4 +1,4 @@
-const API_KEY = "YOUR_API_KEY_HERE";
+const API_KEY = "7903604122024e0b7efb57b94fa08ea7";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -22,3 +22,4 @@ function displayMovies(movies) {
 }
 
 getMovies();
+
