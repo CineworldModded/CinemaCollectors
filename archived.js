@@ -1,44 +1,43 @@
-import { supabase, requireAuth } from './auth.js';
+import { supabase } from './supabaseClient.js'; // your Supabase client
+const TMDB_API_KEY = '7903604122024e0b7efb57b94fa08ea7';
+const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
-async function loadArchivedMovies() {
-  const user = await requireAuth();
-  if (!user) return;
-
-  // 1️⃣ Fetch archived movies
-  const { data: archivedMovies, error: moviesError } = await supabase
-    .from('movies')
-    .select('*')
-    .eq('in_theatres', false)
-    .order('tmdb_id', { ascending: false });
-
-  if (moviesError) return console.error('Error fetching movies:', moviesError);
-
-  // 2️⃣ Fetch user's collection
-  const { data: userCollection } = await supabase
-    .from('collections')
-    .select('movie_id')
-    .eq('user_id', user.id);
-
-  const collectedIds = userCollection.map(m => m.movie_id);
-
-  // 3️⃣ Render movies
-  const container = document.getElementById('archived-movies');
-  container.innerHTML = ''; // clear old content
-
-  archivedMovies.forEach(movie => {
-    const div = document.createElement('div');
-    div.classList.add('movie-card');
-
-    const isCollected = collectedIds.includes(movie.tmdb_id);
-
-    div.innerHTML = `
-      <img src="${movie.poster_path}" alt="${movie.title}" class="${isCollected ? '' : 'grayed'}">
-      <h3>${movie.title}</h3>
-    `;
-
-    container.appendChild(div);
-  });
+async function fetchMovies(page = 1, type = 'now_playing') {
+  const res = await fetch(`https://api.themoviedb.org/3/movie/${type}?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`);
+  const data = await res.json();
+  return data.results;
 }
 
-// Load archived movies on page load
-loadArchivedMovies();
+async function populateAllMovies() {
+  const today = new Date();
+
+  // You can loop through multiple pages if needed
+  let page = 1;
+  let movies;
+
+  do {
+    movies = await fetchMovies(page);
+
+    for (const movie of movies) {
+      const releaseDate = new Date(movie.release_date);
+      const inTheatres = releaseDate > today ? true : false; // mark archived or current
+
+      await supabase.from('movies').upsert({
+        tmdb_id: movie.id,
+        title: movie.title,
+        poster_path: `${IMG_BASE_URL}${movie.poster_path}`,
+        limit: 100,        // max collectors
+        collected: 0,
+        in_theatres: inTheatres
+      }, { onConflict: ['tmdb_id'] });
+    }
+
+    page++;
+  } while (movies && movies.length > 0);
+
+  console.log('Movies table repopulated!');
+}
+
+populateAllMovies()
+  .then(() => console.log('Done!'))
+  .catch(err => console.error(err));
