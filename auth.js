@@ -17,6 +17,13 @@ export async function signIn(email, password) {
   else window.location.href = "index.html";
 }
 
+export async function resetPassword(email) {
+ const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+  redirectTo: 'https://example.com/update-password',
+})
+}
+
+
 export async function logout() {
   await supabase.auth.signOut();
   window.location.href = "login.html";
@@ -25,6 +32,10 @@ export async function logout() {
 // Navigation
 export function goToCollection() {
   window.location.href = "collection.html";
+}
+
+export function goToArchive() {
+  window.location.href = "archived.html";
 }
 
 export function goToHome() {

@@ -1,0 +1,57 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  background-color: #1a1a1a;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  color: #ff9900;
+}
+
+header p {
+  margin: 5px 0 0 0;
+  color: #ccc;
+}
+
+/* Collection container grid */
+#collection {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 30px; /* Increased gap between grid items */
+  padding: 40px; /* Increased padding around the grid */
+}
+
+/* Each movie card */
+.movie-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Poster image */
+.movie-card img {
+  width: 120px; /* smaller width */
+  height: 180px; /* maintain aspect ratio */
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  margin-bottom: 8px; /* Added margin to increase space between image and title */
+}
+
+/* Movie title */
+.movie-card h3 {
+  font-size: 0.75rem; /* smaller text */
+  margin-top: 0; /* Adjusted to remove extra top margin */
+  word-break: break-word;
+}

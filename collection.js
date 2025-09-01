@@ -10,7 +10,11 @@ async function loadCollection() {
   const user = await requireAuth();
   if (!user) return;
 
-  const { data, error } = await supabase.from('collections').select('movie_id').eq('user_id', user.id);
+  const { data, error } = await supabase
+    .from('collections')
+    .select('movie_id')
+    .eq('user_id', user.id);
+
   if (error) return console.error(error);
 
   const container = document.getElementById("collection");
@@ -21,10 +25,13 @@ async function loadCollection() {
     const movie = await res.json();
 
     const div = document.createElement("div");
+    div.classList.add("movie-card"); // Add the same class as index.html
+
     div.innerHTML = `
       <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
       <h3>${movie.title}</h3>
     `;
+
     container.appendChild(div);
   }
 }
