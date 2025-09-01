@@ -3,13 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cinema Collectors</title>
+  <title>Movie Collector</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>🎬 Cinema Collectors</h1>
+  <h1>🎬 Movie Collector</h1>
+  
+  <!-- 🔹 AUTH FORM -->
+  <div id="auth">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="signUp()">Sign Up</button>
+    <button onclick="signIn()">Sign In</button>
+  </div>
+
+  <!-- 🔹 MOVIE LIST -->
   <div id="movies"></div>
-  <script src="script.js"></script>
+
+  <script type="module" src="script.js"></script>
 </body>
 </html>
-
