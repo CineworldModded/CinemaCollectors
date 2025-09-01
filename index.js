@@ -1,4 +1,4 @@
-import { supabase, requireAuth, goToCollection, logout } from './auth.js';
+import { supabase, requireAuth, goToCollection, goToArchive, logout } from './auth.js';
 
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 const API_KEY = "7903604122024e0b7efb57b94fa08ea7"; // Replace with your TMDb key
@@ -68,5 +68,6 @@ async function collectMovie(movie) {
 }
 
 init();
+
 
 
