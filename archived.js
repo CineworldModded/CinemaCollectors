@@ -23,7 +23,7 @@ async function init() {
 // Fetch and display movies
 async function loadMovies() {
   try {
-    const res = await fetch(`${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`);
+    const res = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`);
     const data = await res.json();
     displayMovies(data.results);
   } catch (err) {
