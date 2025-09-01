@@ -1,13 +1,13 @@
-/* Collection container */
+/* Collection container grid */
 #collection {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
   padding: 16px;
 }
 
 /* Each movie card */
-#collection .movie-card {
+.movie-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,8 +15,17 @@
 }
 
 /* Poster image */
-#collection .movie-card img {
-  width: 100px;        /* smaller width */
-  height: 150px;       /* maintain aspect ratio */
-  object-fit: cover;   /* crop if needed */
-  border-radius: 8px;  /
+.movie-card img {
+  width: 80px;         /* smaller width */
+  height: 120px;       /* maintain aspect ratio */
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Movie title */
+.movie-card h3 {
+  font-size: 0.75rem;  /* smaller text */
+  margin-top: 4px;
+  word-break: break-word;
+}
