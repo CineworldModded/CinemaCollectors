@@ -18,9 +18,9 @@ export async function signIn(email, password) {
 }
 
 export async function resetPassword(email) {
-  const { data, error } = await supabase.auth.resetPasswordForEmail({email});
-  if (error) alert(error.message);
-  else window.location.href = "index.html";
+ const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+  redirectTo: 'https://example.com/update-password',
+})
 }
 
 
