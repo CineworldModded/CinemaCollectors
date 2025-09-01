@@ -13,7 +13,7 @@ resetBtn.addEventListener('click', async () => {
   if (!email) return alert("Please enter your email first.");
 
   const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: 'https://yourwebsite.com/reset-password' // optional redirect after reset
+    redirectTo: 'https://cinema-collectors.vercel.app/login.html' // optional redirect after reset
   });
 
   if (error) {
