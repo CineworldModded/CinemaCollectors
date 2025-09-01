@@ -7,22 +7,28 @@ body {
   padding: 0;
 }
 
+h1 {
+  margin-top: 20px;
+}
+
 #auth {
-  margin: 20px;
+  margin: 20px 0;
 }
 
-input {
-  padding: 8px;
+#auth input {
+  padding: 10px;
   margin: 5px;
   border-radius: 5px;
   border: none;
 }
 
-button {
-  padding: 8px 12px;
+#auth button {
+  padding: 10px 15px;
   margin: 5px;
   border-radius: 5px;
   border: none;
+  background-color: #ff9900;
+  color: white;
   cursor: pointer;
 }
 
@@ -33,7 +39,21 @@ button {
   padding: 20px;
 }
 
-img {
+#movies img {
   width: 100%;
   border-radius: 10px;
+}
+
+#movies h3 {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+#movies button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #00aa00;
+  color: white;
+  cursor: pointer;
 }
