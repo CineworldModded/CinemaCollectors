@@ -1,0 +1,22 @@
+/* Collection container */
+#collection {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Each movie card */
+#collection .movie-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Poster image */
+#collection .movie-card img {
+  width: 100px;        /* smaller width */
+  height: 150px;       /* maintain aspect ratio */
+  object-fit: cover;   /* crop if needed */
+  border-radius: 8px;  /
