@@ -27,6 +27,10 @@ export function goToCollection() {
   window.location.href = "collection.html";
 }
 
+export function goToArchive() {
+  window.location.href = "archived.html";
+}
+
 export function goToHome() {
   window.location.href = "index.html";
 }
