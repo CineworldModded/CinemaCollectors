@@ -26,13 +26,19 @@ async function loadCollection() {
     const res = await fetch(`${BASE_URL}/movie/${entry.movie_id}?api_key=${API_KEY}&language=en-US`);
     const movie = await res.json();
 
-    console.log(entry.collected_at);
-    const date = new Date(entry.collected_at);
-    const formattedDate = date.toLocaleDateString('en-US', {
+    const releaseDate = new Date(movie.release_date);
+    const collectionDate = new Date(entry.collected_at);
+    const CollectionformattedDate = collectionDate.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric'
 }); // e.g., "9/2/2025, 1:45:22 PM"
+
+    const ReleaseformattedDate = releaseDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
 
     const div = document.createElement("div");
     div.classList.add("movie-card"); // Add the same class as index.html
@@ -40,7 +46,8 @@ async function loadCollection() {
     div.innerHTML = `
       <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
       <h3>${movie.title}</h3>
-      <h3>Time Collected: ${formattedDate}</h3>
+      <h3>Release Date: ${ReleaseformattedDate}</h3>
+      <h3>Time Collected: ${CollectionformattedDate}</h3>
     `;
 
     container.appendChild(div);
