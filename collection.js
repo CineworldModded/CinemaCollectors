@@ -28,7 +28,11 @@ async function loadCollection() {
 
     console.log(entry.collected_at);
     const date = new Date(entry.collected_at);
-    const formattedDate = date.toLocaleDateString(); // e.g., "9/2/2025, 1:45:22 PM"
+    const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}); // e.g., "9/2/2025, 1:45:22 PM"
 
     const div = document.createElement("div");
     div.classList.add("movie-card"); // Add the same class as index.html
