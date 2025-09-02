@@ -50,6 +50,9 @@ async function displayMovies(movies) {
   }
 
   movies.forEach(movie => {
+
+    if (movie.banned) return alert("This movie is banned and cannot be collected.");
+
     const div = document.createElement("div");
     div.classList.add("movie-card");
 
@@ -90,6 +93,9 @@ async function collectMovie(movie) {
   if (existing) {
     return alert(`You already collected "${movie.title}"!`);
   }
+
+  if (movie.banned) return alert("This movie is banned and cannot be collected.");
+
 
   // 2️⃣ Insert new collection
   const { error } = await supabase.from('collections').insert([
