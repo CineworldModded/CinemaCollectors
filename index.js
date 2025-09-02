@@ -58,10 +58,12 @@ async function displayMovies(movies) {
 
     // Check if this movie is already collected
     const isCollected = collectedIds.includes(movie.id.toString());
+    const moviesLeft = movie.total_stock - movie.collected;
 
     div.innerHTML = `
       <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
       <h3>${movie.title}</h3>
+      <h3>Movies Left: ${moviesLeft}</h3>
       <button class="collectBtn" ${isCollected ? "disabled" : ""}>
         ${isCollected ? "Collected" : "Collect"}
       </button>

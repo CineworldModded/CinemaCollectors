@@ -45,12 +45,25 @@ async function loadCollection() {
 
     let rarityClass = collectionDate <= releaseDate ? "rare" : "normal";
 
-    div.innerHTML = `
+              if (collectionDate <= releaseDate) {
+ div.innerHTML = `
       <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
        <p class="${rarityClass}">${movie.title}</p>
       <h3>Release Date: ${ReleaseformattedDate}</h3>
-      <h3>Time Collected: ${CollectionformattedDate}</h3>
+      <h3>You collected ${movie.title} on ${CollectionformattedDate}.</h3>
+      <h3>Opening Night! (Variant)>
     `;
+} else {
+  div.innerHTML = `
+      <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
+       <p class="${rarityClass}">${movie.title}</p>
+      <h3>Release Date: ${ReleaseformattedDate}</h3>
+      <h3>You collected ${movie.title} on ${CollectionformattedDate}.</h3>
+    `;
+}
+
+
+    
 
     container.appendChild(div);
   }
