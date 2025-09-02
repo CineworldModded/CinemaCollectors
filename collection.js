@@ -26,7 +26,7 @@ async function loadCollection() {
     const res = await fetch(`${BASE_URL}/movie/${entry.movie_id}?api_key=${API_KEY}&language=en-US`);
     const movie = await res.json();
 
-
+    console.log(entry.collected_at);
     const date = new Date(entry.collected_at);
     const formattedDate = date.toLocaleString(); // e.g., "9/2/2025, 1:45:22 PM"
 
