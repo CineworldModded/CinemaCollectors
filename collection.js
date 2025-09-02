@@ -49,9 +49,9 @@ async function loadCollection() {
  div.innerHTML = `
       <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
        <p class="${rarityClass}">${movie.title}</p>
-      <h3>Release Date: ${ReleaseformattedDate}</h3>
-      <h3>You collected ${movie.title} on ${CollectionformattedDate}.</h3>
-      <h3>Opening Night! (Variant)>
+      <p class="${rarityClass}">Release Date: ${ReleaseformattedDate}</p>
+      <p class="${rarityClass}">You collected ${movie.title} on ${CollectionformattedDate}.</p>
+      <p class="${rarityClass}">Opening Night! (Variant)</p>
     `;
 } else {
   div.innerHTML = `

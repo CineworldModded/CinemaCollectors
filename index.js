@@ -60,10 +60,12 @@ async function displayMovies(movies) {
     const isCollected = collectedIds.includes(movie.id.toString());
     const moviesLeft = movie.total_stock - movie.collected;
 
+    // <h3>Movies Left: ${moviesLeft}</h3>
+
     div.innerHTML = `
       <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
       <h3>${movie.title}</h3>
-      <h3>Movies Left: ${moviesLeft}</h3>
+     
       <button class="collectBtn" ${isCollected ? "disabled" : ""}>
         ${isCollected ? "Collected" : "Collect"}
       </button>
