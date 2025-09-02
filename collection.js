@@ -43,7 +43,7 @@ async function loadCollection() {
     const div = document.createElement("div");
     div.classList.add("movie-card"); // Add the same class as index.html
 
-    let rarityClass = collectedDate <= releaseDate ? "rare" : "normal";
+    let rarityClass = collectionDate <= releaseDate ? "rare" : "normal";
 
     div.innerHTML = `
       <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
