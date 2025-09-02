@@ -40,7 +40,7 @@ async function loadCollection() {
     div.innerHTML = `
       <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
       <h3>${movie.title}</h3>
-      <h3>${formattedDate}</h3>
+      <h3>Time Collected: ${formattedDate}</h3>
     `;
 
     container.appendChild(div);
