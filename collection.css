@@ -55,3 +55,12 @@ header p {
   margin-top: 0; /* Adjusted to remove extra top margin */
   word-break: break-word;
 }
+
+.rare {
+  color: blue;
+}
+
+.normal {
+  color: white;
+}
+
