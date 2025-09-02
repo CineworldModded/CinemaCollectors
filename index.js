@@ -33,25 +33,45 @@ async function loadMovies() {
 }
 
 // Render movie posters and Collect buttons
-function displayMovies(movies) {
+async function displayMovies(movies) {
   moviesContainer.innerHTML = "";
+
+  const session = await supabase.auth.getSession();
+  const user = session.data.session?.user;
+
+  // Get all movie IDs the user has collected
+  let collectedIds = [];
+  if (user) {
+    const { data: collected } = await supabase
+      .from('collections')
+      .select('movie_id')
+      .eq('user_id', user.id);
+    collectedIds = collected.map(c => c.movie_id);
+  }
 
   movies.forEach(movie => {
     const div = document.createElement("div");
     div.classList.add("movie-card");
 
+    // Check if this movie is already collected
+    const isCollected = collectedIds.includes(movie.id.toString());
+
     div.innerHTML = `
       <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
       <h3>${movie.title}</h3>
-      <button class="collectBtn">Collect</button>
+      <button class="collectBtn" ${isCollected ? "disabled" : ""}>
+        ${isCollected ? "Collected" : "Collect"}
+      </button>
     `;
 
-    // Add click event for collecting
-    div.querySelector(".collectBtn").onclick = () => collectMovie(movie);
+    if (!isCollected) {
+      div.querySelector(".collectBtn").onclick = () => collectMovie(movie);
+    }
 
     moviesContainer.appendChild(div);
   });
 }
+
 
 // Add movie to user's collection
 async function collectMovie(movie) {
@@ -59,15 +79,34 @@ async function collectMovie(movie) {
   const user = session.data.session?.user;
   if (!user) return alert("Please log in first!");
 
+  // 1️⃣ Check if already collected
+  const { data: existing, error: checkError } = await supabase
+    .from('collections')
+    .select('id')
+    .eq('user_id', user.id)
+    .eq('movie_id', movie.id.toString())
+    .single(); // gets one row if exists
+
+  if (existing) {
+    return alert(`You already collected "${movie.title}"!`);
+  }
+
+  // 2️⃣ Insert new collection
   const { error } = await supabase.from('collections').insert([
-    { user_id: user.id, movie_id: movie.id.toString() } // Ensure movie_id is string
+    { user_id: user.id, movie_id: movie.id.toString() }
   ]);
 
   if (error) return alert("Error collecting movie: " + error.message);
+
   alert(`🎉 You collected "${movie.title}"!`);
+
+  // 3️⃣ Optionally refresh UI to disable button
+  loadMovies();
 }
 
+
 init();
+
 
 
 
