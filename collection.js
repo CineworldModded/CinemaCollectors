@@ -12,7 +12,7 @@ async function loadCollection() {
 
   const { data, error } = await supabase
     .from('collections')
-    .select('movie_id', 'collected_at')
+    .select('movie_id, collected_at')
     .eq('user_id', user.id);
 
   
