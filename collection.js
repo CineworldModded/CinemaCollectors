@@ -15,6 +15,8 @@ async function loadCollection() {
     .select('movie_id', 'collected_at')
     .eq('user_id', user.id);
 
+  
+
   if (error) return console.error(error);
 
   const container = document.getElementById("collection");
@@ -24,13 +26,17 @@ async function loadCollection() {
     const res = await fetch(`${BASE_URL}/movie/${entry.movie_id}?api_key=${API_KEY}&language=en-US`);
     const movie = await res.json();
 
+
+    const date = new Date(entry.collected_at);
+    const formattedDate = date.toLocaleString(); // e.g., "9/2/2025, 1:45:22 PM"
+
     const div = document.createElement("div");
     div.classList.add("movie-card"); // Add the same class as index.html
 
     div.innerHTML = `
       <img src="${IMG_URL + movie.poster_path}" alt="${movie.title}">
       <h3>${movie.title}</h3>
-      <h3>${entry.collected_at}</h3>
+      <h3>${formattedDate}</h3>
     `;
 
     container.appendChild(div);
